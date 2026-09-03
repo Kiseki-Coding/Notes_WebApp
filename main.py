@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.routers import auth
+from backend.routers import auth, note
 
 
 app = FastAPI(debug=True)
@@ -21,6 +21,7 @@ app.add_middleware(
 )
 
 app.include_router(auth.router, prefix="/Auth")
+app.include_router(note.router, prefix="/notes")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

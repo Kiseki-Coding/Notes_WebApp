@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Text, Column, Integer, String, Boolean ,DateTime, ForeignKey
+from sqlalchemy import Text,Column, Integer, String, Boolean ,DateTime, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -20,21 +20,9 @@ class User(Base):
 class Note(Base):
     __tablename__ = "notes"
 
-    id: Mapped[int] = mapped_column(
-        primary_key=True,
-        index=True
-    )
-
-    title: Mapped[str] = mapped_column(
-        String(255),
-        nullable=False
-    )
-
-    content: Mapped[str] = mapped_column(
-        Text,
-        nullable=False,
-        default=""
-    )
+    id: Mapped[int] = mapped_column(primary_key=True,index=True)
+    title: Mapped[str] = mapped_column(String(255),nullable=False)
+    content: Mapped[str] = mapped_column(Text,nullable=False,default="")
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
