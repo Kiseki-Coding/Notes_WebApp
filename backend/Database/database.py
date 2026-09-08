@@ -1,17 +1,17 @@
 # database.py
 from sqlalchemy import create_engine, MetaData
-from sqlalchemy.orm import sessionmaker
-from .models import Base
+from sqlalchemy.orm import sessionmaker, declarative_base
 
 DATABASE_URL = "sqlite:///./test.db"  # You can use any database here
 
 #engine is the database connection
-engine = create_engine(DATABASE_URL)
+engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 
 #Creates the database sessions
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 metadata = MetaData()
 
+Base = declarative_base()
 
 #function that gives the API request a database session and closes it after the request is done
 def get_db():
