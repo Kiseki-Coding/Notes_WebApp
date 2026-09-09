@@ -3,12 +3,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background: rgb(34, 33, 33);
 }
 
 .login-box {
     width: 350px;
     padding: 40px;
-    background: white;
+    background: rgb(12, 12, 12);
     border-radius: 12px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
 }
@@ -16,12 +17,12 @@
 .login-box h1 {
     margin: 0;
     text-align: center;
-    color: #080808;
+    color: #c9c0c0;
 }
 
 .login-box p {
     text-align: center;
-    color: #666;
+    color: #c7c4c4;
     margin-bottom: 30px;
 }
 
@@ -29,14 +30,18 @@
     width: 100%;
     padding: 12px;
     margin-bottom: 15px;
-    border: 1px solid #ddd;
+    border: 1px solid #444343;
     border-radius: 6px;
+    background: rgb(7, 7, 7);
+    color: #e0dede;
 }
 
 .login-box button {
     width: 100%;
     padding: 12px;
-    border: none;
+    border: 1px solid #444343;
     border-radius: 6px;
     cursor: pointer;
+    background: rgb(12, 12, 12);
+    color: #bebaba;
 }
