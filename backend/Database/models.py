@@ -35,8 +35,3 @@ class Note(Base):
         nullable=False
     )
 
-    archived: Mapped[bool] = mapped_column(
-        Boolean,
-        default=False,
-        nullable=False
-    )   

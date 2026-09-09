@@ -33,7 +33,6 @@ class NoteCreate(BaseModel):
 class NoteUpdate(BaseModel):
     title: str | None = None
     content: str | None = None
-    archived: bool | None = None
 
 class NoteResponse(BaseModel):
     id: int
@@ -41,4 +40,3 @@ class NoteResponse(BaseModel):
     content: str
     created_at: datetime
     updated_at: datetime
-    archived: bool
