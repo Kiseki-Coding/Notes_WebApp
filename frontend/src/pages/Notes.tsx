@@ -25,10 +25,8 @@ function Notes() {
 
     const [search, setSearch] = useState("");
 
-    const [darkMode, setDarkMode] = useState(
-        localStorage.getItem("darkMode") === "true"
-    );
-
+    const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+    
     useEffect(() => {
         getNotes();
     }, []);
@@ -127,17 +125,6 @@ function Notes() {
         }
     };
 
-    const toggleDarkMode = () => {
-        const newMode = !darkMode;
-
-        setDarkMode(newMode);
-
-        localStorage.setItem(
-            "darkMode",
-            String(newMode)
-        );
-    };
-
     if (loading) {
         return <p>Loading notes...</p>;
     }
@@ -149,23 +136,19 @@ function Notes() {
     );
 
     return (
-        <div
-            className={
-                darkMode
-                    ? "notes-page dark"
-                    : "notes-page"
-            }
-        >
+        <div className="notes-page">
             <Sidebar
                 notes={filteredNotes}
                 selectedNote={selectedNote}
                 search={search}
-                darkMode={darkMode}
                 onSearchChange={setSearch}
                 onSelectNote={setSelectedNote}
                 onCreateNote={createNote}
-                onToggleDarkMode={toggleDarkMode}
                 onLogout={logout}
+                collapsed={sidebarCollapsed}
+                onToggleCollapse={() =>
+                setSidebarCollapsed(!sidebarCollapsed)
+                }
             />
 
             <main className="editor">

@@ -1,4 +1,4 @@
- import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Note {
     id: number;
@@ -24,6 +24,40 @@ function NoteEditor({
 
     const [isEditing, setIsEditing] = useState(false);
 
+    const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+    /*
+        Resize the textarea so that all of its
+        content is visible.
+
+        This means the textarea itself does NOT
+        need a scrollbar.
+
+        The browser/page scrollbar will handle
+        the scrolling instead.
+    */
+    const resizeTextarea = () => {
+        const textarea = textareaRef.current;
+
+        if (!textarea) return;
+
+        textarea.style.height = "auto";
+        textarea.style.height = `${textarea.scrollHeight}px`;
+    };
+
+    /*
+        Resize the textarea when:
+
+        - Edit mode starts
+        - The note changes
+        - The note content changes
+    */
+    useEffect(() => {
+        if (isEditing) {
+            resizeTextarea();
+        }
+    }, [isEditing, note?.content]);
+
     if (!note) {
         return (
             <div className="no-note-selected">
@@ -44,8 +78,63 @@ function NoteEditor({
         setIsEditing(false);
     };
 
+    const handleContentChange = (
+        event: React.ChangeEvent<HTMLTextAreaElement>
+    ) => {
+
+        const textarea = event.target;
+
+        /*
+            Update the note content.
+        */
+        onChange({
+            ...note,
+            content: textarea.value,
+        });
+
+        /*
+            Make the textarea grow with
+            the amount of text inside it.
+        */
+        textarea.style.height = "auto";
+        textarea.style.height = `${textarea.scrollHeight}px`;
+    };
+
     return (
         <div className="editor-container">
+
+            <div className="editor-toolbar">
+
+                <div className="editor-actions">
+
+                    {!isEditing ? (
+                        <button
+                            className="edit-button"
+                            onClick={() => setIsEditing(true)}
+                        >
+                            Edit
+                        </button>
+                    ) : (
+                        <>
+                            <button
+                                className="save-button"
+                                onClick={handleSave}
+                            >
+                                Save
+                            </button>
+
+                            <button
+                                className="delete-button"
+                                onClick={onDelete}
+                            >
+                                Delete
+                            </button>
+                        </>
+                    )}
+
+                </div>
+
+            </div>
 
             {isEditing ? (
                 <input
@@ -58,6 +147,7 @@ function NoteEditor({
                             title: event.target.value,
                         })
                     }
+                    placeholder="Untitled"
                 />
             ) : (
                 <h2 className="note-title-display">
@@ -67,14 +157,10 @@ function NoteEditor({
 
             {isEditing ? (
                 <textarea
+                    ref={textareaRef}
                     className="note-content"
                     value={note.content}
-                    onChange={(event) =>
-                        onChange({
-                            ...note,
-                            content: event.target.value,
-                        })
-                    }
+                    onChange={handleContentChange}
                     placeholder="Start writing..."
                 />
             ) : (
@@ -83,38 +169,8 @@ function NoteEditor({
                 </div>
             )}
 
-            <div className="editor-buttons">
-
-                {!isEditing ? (
-                    <button
-                        className="edit-button"
-                        onClick={() => setIsEditing(true)}
-                    >
-                        Edit
-                    </button>
-                ) : (
-                    <>
-                        <button
-                            className="save-button"
-                            onClick={handleSave}
-                        >
-                            Save
-                        </button>
-
-                        <button
-                            className="delete-button"
-                            onClick={onDelete}
-                        >
-                            Delete
-                        </button>
-                    </>
-                )}
-
-            </div>
-
         </div>
     );
 }
 
 export default NoteEditor;
-

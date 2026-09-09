@@ -1,14 +1,85 @@
+html,
+body,
+#root {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+}
+
+html {
+    overflow-y: scroll;
+    scrollbar-width: auto;
+    scrollbar-color: #555 #202020;
+}
+
+body {
+    overflow-x: hidden;
+    font-family: Arial, sans-serif;
+
+    background: #f5f5f5;
+    color: #222;
+
+    /* Light theme scrollbar */
+    scrollbar-color: #aaa #f1f1f1;
+    scrollbar-width: auto;
+}
+
+/* Chrome / Edge / other WebKit browsers */
+
+html::-webkit-scrollbar {
+    width: 12px;
+}
+
+html::-webkit-scrollbar-track {
+    background: #202020;
+}
+
+html::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 6px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
 * {
     box-sizing: border-box;
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
+button,
+input,
+textarea {
+    font: inherit;
 }
 
-button,
-input {
-    font: inherit;
+/* =========================
+   DARK MODE SCROLLBAR
+   ========================= */
+
+body.dark-mode {
+    background: #181818;
+    color: #eeeeee;
+
+    scrollbar-color: #555 #202020;
+}
+
+body.dark-mode html {
+    scrollbar-color: #555 #202020;
+}
+
+body.dark-mode::-webkit-scrollbar {
+    width: 12px;
+}
+
+body.dark-mode::-webkit-scrollbar-track {
+    background: #202020;
+}
+
+body.dark-mode::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 6px;
+}
+
+body.dark-mode::-webkit-scrollbar-thumb:hover {
+    background: #666;
 }

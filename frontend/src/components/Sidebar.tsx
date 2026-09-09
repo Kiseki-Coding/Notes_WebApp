@@ -1,7 +1,5 @@
-
 import SearchBar from "./SearchBar";
 import Notelist from "./Notelist";
-import ThemeToggle from "./ThemeToggle";
 
 interface Note {
     id: number;
@@ -15,32 +13,45 @@ interface SidebarProps {
     notes: Note[];
     selectedNote: Note | null;
     search: string;
-    darkMode: boolean;
 
     onSearchChange: (value: string) => void;
     onSelectNote: (note: Note) => void;
     onCreateNote: () => void;
-    onToggleDarkMode: () => void;
     onLogout: () => void;
+
+    collapsed: boolean;
+    onToggleCollapse: () => void;
 }
 
 function Sidebar({
     notes,
     selectedNote,
     search,
-    darkMode,
     onSearchChange,
     onSelectNote,
     onCreateNote,
-    onToggleDarkMode,
     onLogout,
+    collapsed,
+    onToggleCollapse
 }: SidebarProps) {
 
     return (
-        <aside className="sidebar">
+        <aside className={collapsed ? "sidebar collapsed" : "sidebar"}>
+
+            <button
+                className="collapse-button"
+                onClick={onToggleCollapse}
+                title={
+                    collapsed
+                        ? "Expand sidebar"
+                        : "Collapse sidebar"
+                }
+            >
+                {collapsed ? ">" : "<"}
+            </button>
 
             <h1 className="sidebar-title">
-                NOTES
+                {collapsed ? "N" : "NOTES"}
             </h1>
 
             <SearchBar
@@ -51,8 +62,9 @@ function Sidebar({
             <button
                 className="new-note-button"
                 onClick={onCreateNote}
+                title="New Note"
             >
-                + New Note
+                {collapsed ? "+" : "+ New Note"}
             </button>
 
             <Notelist
@@ -63,16 +75,12 @@ function Sidebar({
 
             <div className="sidebar-bottom">
 
-                <ThemeToggle
-                    darkMode={darkMode}
-                    onToggle={onToggleDarkMode}
-                />
-
                 <button
                     className="logout-button"
                     onClick={onLogout}
+                    title="Logout"
                 >
-                    Logout
+                    {collapsed ? "↪" : "Logout"}
                 </button>
 
             </div>
@@ -82,4 +90,3 @@ function Sidebar({
 }
 
 export default Sidebar;
-
