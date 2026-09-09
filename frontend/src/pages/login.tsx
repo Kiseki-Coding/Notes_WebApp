@@ -1,12 +1,12 @@
 import { useState } from "react";
 import "../styles/login.css";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const { login } = useAuth();
+    const { login, isAuthenticated } = useAuth();
     const navigate = useNavigate();
     const handleLogin = async () => {
         try {
@@ -18,7 +18,9 @@ function Login() {
         console.error("Login failed:", error);
     }
     };
-
+    if (isAuthenticated) {
+    return <Navigate to="/notes" replace />;
+    }
     return (
         <div className="login-page">
 
