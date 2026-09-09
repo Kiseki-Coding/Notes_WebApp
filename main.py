@@ -1,10 +1,11 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from backend.Database.database import Base, engine
+from backend.Database import models
 from backend.routers import auth, note
 
-
+Base.metadata.create_all(bind=engine)
 app = FastAPI(debug=True)
 
 origins = [
@@ -20,7 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth.router, prefix="/Auth")
+app.include_router(auth.router, prefix="/auth")
 app.include_router(note.router, prefix="/notes")
 
 if __name__ == "__main__":

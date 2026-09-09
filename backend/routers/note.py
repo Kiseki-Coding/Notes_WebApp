@@ -8,7 +8,6 @@ from ..Database.schemas import NoteCreate, NoteUpdate, NoteResponse
 
 
 router = APIRouter(
-    prefix="/notes",
     tags=["Notes"]
 )
 

@@ -1,15 +1,24 @@
 import { useState } from "react";
 import "../styles/login.css";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-
+    const { login } = useAuth();
+    const navigate = useNavigate();
     const handleLogin = async () => {
-        console.log("Username:", username);
-        console.log("Password:", password);
+        try {
+        await login(username, password);
+
+        navigate("/notes");
+
+    } catch (error) {
+        console.error("Login failed:", error);
+    }
     };
-    
+
     return (
         <div className="login-page">
 
