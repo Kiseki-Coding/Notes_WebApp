@@ -1,8 +1,11 @@
 # database.py
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker, declarative_base
+from decouple import config
 
-DATABASE_URL = "sqlite:///./test.db"  # You can use any database here
+DATABASE_URL = config("DATABASE_URL")
+
+# You can use any database here
 
 #engine is the database connection
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
